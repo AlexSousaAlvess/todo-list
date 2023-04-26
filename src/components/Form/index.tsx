@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, TextInput, TouchableOpacity, View } from 'react-native';
 import Plus from '../../assets/images/plus.svg';
 
 import styles from './styles';
@@ -21,6 +21,15 @@ export default function Form({placeholder, handleTask}:Props){
     setBorderBoxColor('#0D0D0D');
   };
 
+  function handleInsertTextAndCleanInput(){
+    if(textTask === ''){
+      Alert.alert('Digite uma tarefa');
+      return;
+    }
+    handleTask(textTask);
+    setTextTask('');
+  }
+
   return(
     <View style={styles.container}>
       <TextInput 
@@ -30,10 +39,11 @@ export default function Form({placeholder, handleTask}:Props){
         onBlur={handleOnBlur}
         onFocus={handleOnFocus}
         onChangeText={setTextTask}
+        value={textTask}
       />
       <TouchableOpacity 
         style={styles.button}
-        onPress={()=>handleTask(textTask)}
+        onPress={()=>handleInsertTextAndCleanInput()}
       >
         <Plus/>
       </TouchableOpacity>
