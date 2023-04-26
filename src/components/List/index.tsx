@@ -6,19 +6,19 @@ import Empty from '../../assets/images/clipboard.svg';
 import styles from './styles';
 import Card from '../Card';
 
-interface Item {
+interface Task {
   id: number,
   taskName: string;
   taskCheck: boolean;
 }
 
 interface Props{
-  itens: Item[];
+  itens: Task[];
+  handleTrash: () => void;
 }
 
-export default function List({itens}:Props) {
+export default function List({itens, handleTrash}:Props) {
   
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -38,7 +38,14 @@ export default function List({itens}:Props) {
       <View style={styles.content}>
         <FlatList
           data={itens}
-          renderItem={({ item }) => <Card name={item.taskName} check={item.taskCheck}/>}
+          renderItem={({ item }) => (
+            <Card 
+              name={item.taskName} 
+              check={item.taskCheck}
+              task={item}
+              handleTrash={handleTrash}
+            />
+          )}
           keyExtractor={item => String(item.id)}
           ListEmptyComponent={
             () => (

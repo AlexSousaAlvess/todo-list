@@ -14,6 +14,8 @@ interface Task {
 }
 
 export default function Home(){
+  const [task, setTask] = useState<Task[]>([]);
+
   function addNewTask(text:string){
 
     const NewElement:Task={
@@ -24,7 +26,9 @@ export default function Home(){
     setTask(prevState => [...prevState, NewElement])
   }
 
-  const [task, setTask] = useState<Task[]>([])
+  function removeTask(item:Task | void){
+    setTask(task.filter(t=>t.id!==item?.id));
+  }
 
   return(
     <View style={styles.container}>
@@ -34,9 +38,11 @@ export default function Home(){
       <Form 
         placeholder='Adicione uma nova tarefa' 
         handleTask={addNewTask}
-        
       />
-      <List itens={task}/>
+      <List 
+        itens={task}
+        handleTrash={removeTask}
+      />
     </View>
   );
 }

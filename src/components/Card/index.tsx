@@ -1,16 +1,24 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Trash from '../../assets/images/trash.svg';
 
 import styles from './styles';
 
+interface Task {
+  id: number,
+  taskName: string;
+  taskCheck: boolean;
+}
+
 interface Props{
   name: string;
   check: boolean;
+  task: Task;
+  handleTrash: (e:Task) => void;
 }
 
-export default function Card({name,check}:Props) {
+export default function Card({name, check, task, handleTrash}:Props) {
   return (
     <View style={styles.container}>
         <BouncyCheckbox
@@ -26,7 +34,11 @@ export default function Card({name,check}:Props) {
             flexDirection: 'row'
           }}
         />
-        <Trash style={styles.icon}/>
+        <TouchableOpacity
+          onPress={()=>handleTrash(task)}
+        >
+          <Trash style={styles.icon}/>
+        </TouchableOpacity>
     </View>
   );
 }
