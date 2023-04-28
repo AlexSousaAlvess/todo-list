@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, View, Text } from 'react-native';
 
 import Empty from '../../assets/images/clipboard.svg';
 
 import styles from './styles';
 import Card from '../Card';
-
-interface Task {
-  id: number,
-  taskName: string;
-  taskCheck: boolean;
-}
+import { Task } from '../../interfaces';
 
 interface Props{
   itens: Task[];
   handleTrash: () => void;
+  handleCompleted: () => void;
 }
 
-export default function List({itens, handleTrash}:Props) {
+export default function List({itens, handleTrash, handleCompleted}:Props) {
   
   return (
     <View style={styles.container}>
@@ -31,7 +27,9 @@ export default function List({itens, handleTrash}:Props) {
         <View style={styles.headerContent}>
           <Text style={styles.title}>Concluídas</Text>
           <View style={styles.countBox}>
-            <Text style={styles.count}>{itens?.length ? itens.length : 0}</Text>
+            <Text style={styles.count}>
+              {itens.filter((item)=>item.taskCheck!=false).length}
+            </Text>
           </View>
         </View>
       </View>
@@ -40,10 +38,10 @@ export default function List({itens, handleTrash}:Props) {
           data={itens}
           renderItem={({ item }) => (
             <Card 
-              name={item.taskName} 
               check={item.taskCheck}
               task={item}
               handleTrash={handleTrash}
+              handleCompleted={handleCompleted}
             />
           )}
           keyExtractor={item => String(item.id)}
