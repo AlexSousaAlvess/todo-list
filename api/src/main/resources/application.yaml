@@ -1,0 +1,17 @@
+server:
+  8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/todo-list
+    username: postgres
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+      properties:
+        hibernate:
+          show_sql:true
