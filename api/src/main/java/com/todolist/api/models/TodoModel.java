@@ -1,12 +1,14 @@
 package com.todolist.api.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.UUID;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@Entity
+@Table(name = "TB_TODO")
 public class TodoModel{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
